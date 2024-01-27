@@ -1,326 +1,348 @@
-# i3 config file (v4)
-# Please see http://i3wm.org/docs/userguide.html for a complete reference!
-
-# set modifier
-set $super Mod4
-set $alt Mod1
-
-#polybar
-exec_always ~/.config/polybar/launch.sh
-
-
-################################
-### Commonly Used Variables: ###
-################################
-# - Below defined are some of the very common variables that users like to customise
-# - For Keybindings search: Commonly Used Keybindings in this document
-# - Make sure that you give the absolute path to the binary / program / executable
-# - You may specify any additional arguments required by the binary / executable
-
-### Wallpaper: ###
-# - You need to specify homescreen wallpaper using azote
-
-set $lockScreenWallpaper /usr/share/wallpapers/garuda-wallpapers/Totem.jpg
-exec --no-startup-id feh --bg-scale /usr/share/wallpapers/garuda-wallpapers/Totem.jpg
-
-### Applications: ###
-
-set $preferredTerminalEmulator /usr/bin/alacritty
-set $preferredBrowser /usr/bin/firefox
-set $preferredFileManager /usr/bin/thunar
-set $preferredTextEditor /usr/bin/code
-set $preferredCommunication /usr/bin/discord
-set $preferredMusic /usr/bin/spotify
-set $preferredScreenCaptureTool /usr/bin/flameshot gui
-
-###########################################
-### Commonly Used Application Keybinds: ###
-###########################################
-
-bindsym $super+F1 exec $preferredBrowser;focus
-bindsym $super+F4 exec $preferredFileManager;focus
-bindsym $super+F2 exec $preferredTextEditor;focus
-bindsym $super+F5 exec $preferredCommunication;focus
-bindsym $super+F3 exec $preferredMusic;focus
-
-### Screen Capturing & Print Screen: ###
-
-bindsym $super+F9 exec $preferredScreenCaptureTool
-bindsym Print exec --no-startup-id $preferredScreenCaptureTool
-
-
-exec_always setpointer
-exec --startup-id nm-applet &
-### Start a Terminal Emulator: ###
-# - You can change the preferredTerminalEmulator variable
-# - Terminal can also be started using their individual keybindings
-
-bindsym $super+Return exec $preferredTerminalEmulator
-bindsym $super+t exec fish
-
-# set font
-font pango: Nerd Font Hack 10
-
-# Use Mouse+$super to drag floating windows to their wanted position
-floating_modifier $super
-
-# start dmenu (a program launcher)
-bindsym $super+Shift+space exec i3-dmenu-desktop --dmenu="dmenu -i -fn 'Nerd Font Hack:size=10'"
-
-# start rofi (a program launcher) change modus Ctrl + Tab
-bindsym $super+space exec rofi -show drun
-bindsym $super+Tab exec rofi -show window
-
-# Garuda Linux install
-bindsym $super+i exec sudo -E calamares
-
-
-# Screen brightness controls
-bindsym XF86MonBrightnessUp exec --no-startup-id light -A 5%; 
-bindsym XF86MonBrightnessDown exec --no-startup-id light -U 5%; 
-
-# Use pactl to adjust volume in PulseAudio.
-set $refresh_i3status killall -SIGUSR1 i3status
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3status
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && $refresh_i3status
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
-
-
-# music control
-bindsym XF86AudioNext exec playerctl next
-bindsym XF86AudioPrev exec playerctl previous
-bindsym XF86AudioPlay exec playerctl play-pause
-bindsym XF86AudioStop exec playerctl stop
-
-# Print screen
-bindsym $super+Print --release exec --no-startup-id i3-scrot -w
-bindsym $super+Shift+Print --release exec --no-startup-id i3-scrot -s
-
-# kill focused window
-#bindsym $super+c killqq
-bindsym $super+q kill
-
-# change focus
-bindsym $super+Left focus left
-bindsym $super+Down focus down
-bindsym $super+Up focus up
-bindsym $super+Right focus right
-
-# move focused window
-bindsym $super+Shift+Left move left
-bindsym $super+Shift+Down move down
-bindsym $super+Shift+Up move up
-bindsym $super+Shift+Right move right
-
-# split in horizontal orientation
-bindsym $super+h split v
-
-# split in vertical orientation
-bindsym $super+v split h
-
-# enter fullscreen mode for the focused container
-bindsym $super+f fullscreen toggle
-
-# change container layout split
-bindsym $super+s layout toggle split
-
-# toggle tiling / floating
-bindsym $super+d floating toggle
-
-# change focus between tiling / floating windows
-bindsym $super+Shift+d focus mode_toggle
-
-# toggle sticky
-bindsym $super+Shift+s sticky toggle
-
-# focus the parent container
-bindsym $super+a focus parent
-
-# move the currently focused window to the scratchpad
-bindsym $super+Shift+minus move scratchpad
-
-# Show the next scratchpad window or hide the focused scratchpad window.
-# If there are multiple scratchpad windows, this command cycles through them.
-bindsym $super+minus scratchpad show
-
-#navigate workspaces next / previous
-bindsym $super+Ctrl+Right workspace next
-bindsym $super+Ctrl+Left workspace prev
-
-
-# switch to workspace
-bindsym $alt+Control+Right workspace next
-bindsym $alt+Control+Left workspace prev
-bindsym $super+1 workspace 1
-bindsym $super+2 workspace 2
-bindsym $super+3 workspace 3
-bindsym $super+4 workspace 4
-bindsym $super+5 workspace 5
-bindsym $super+6 workspace 6
-bindsym $super+7 workspace 7
-bindsym $super+8 workspace 8
-
-# move focused container to workspace
-bindsym $super+Shift+1 move container to workspace 1
-bindsym $super+Shift+2 move container to workspace 2
-bindsym $super+Shift+3 move container to workspace 3
-bindsym $super+Shift+4 move container to workspace 4
-bindsym $super+Shift+5 move container to workspace 5
-bindsym $super+Shift+6 move container to workspace 6
-bindsym $super+Shift+7 move container to workspace 7
-bindsym $super+Shift+8 move container to workspace 8
-
-# Move to workspace with focused container
-bindsym $super+Ctrl+1 move container to workspace 1; workspace 1
-bindsym $super+Ctrl+2 move container to workspace 2; workspace 2
-bindsym $super+Ctrl+3 move container to workspace 3; workspace 3
-bindsym $super+Ctrl+4 move container to workspace 4; workspace 4
-bindsym $super+Ctrl+5 move container to workspace 5; workspace 5
-bindsym $super+Ctrl+6 move container to workspace 6; workspace 6
-bindsym $super+Ctrl+7 move container to workspace 7; workspace 7
-bindsym $super+Ctrl+8 move container to workspace 8; workspace 8
-
-# reload the configuration file
-bindsym $super+Shift+c reload
-
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $super+Shift+r restart
-
-# exit i3
-#bindsym $super+q exec "i3-nagbar -t warning -m 'Really, exit?' -b 'Yes' 'i3-msg exit'"
-
-# resize window (you can also use the mouse for that)
-mode "resize" {
-        bindsym Right resize shrink width 5 px or 5 ppt
-        bindsym Down resize grow height 5 px or 5 ppt
-        bindsym Up resize shrink height 5 px or 5 ppt
-        bindsym Left resize grow width 5 px or 5 ppt
-        bindsym Return mode "default"
-}
-bindsym $super+r mode "resize"
-
-# change borders
-bindsym $super+u border none
-bindsym $super+y border pixel 1
-bindsym $super+n border normal
-
-
-# panel
-# Open specific applications in floating mode
-for_window [class="calamares"] floating enable border normal
-for_window [class="Clipgrab"] floating enable
-for_window [title="File Transfer*"] floating enable
-for_window [class="bauh"] floating enable
-for_window [class="Galculator"] floating enable border pixel 1
-for_window [class="GParted"] floating enable border normal
-for_window [title="i3_help"] floating enable sticky enable border normal
-for_window [class="Lightdm-settings"] floating enable
-for_window [class="Lxappearance"] floating enable border normal
-for_window [class="Oblogout"] fullscreen enable
-for_window [class="Pavucontrol"] floating enable
-for_window [class="Qtconfig-qt4"] floating enable border normal
-for_window [class="qt5ct"] floating enable sticky enable border normal
-for_window [class="Simple-scan"] floating enable border normal
-for_window [class="(?i)System-config-printer.py"] floating enable border normal
-for_window [class="Timeshift-gtk"] floating enable border normal
-for_window [class="Xfburn"] floating enable
-for_window [class="keepassxc"] floating enable
-for_window [class="garuda-welcome"] floating enable
-
-# window rules, you can find the window class using xprop
-for_window [class=".*"] border pixel 4
-assign [class=URxvt] 1
-for_window [class=Viewnior|feh|Audacious|File-roller|Lxappearance|Lxtask|Pavucontrol|upgrade2ultimate.sh] floating enable
-for_window [class=URxvt|firedragon|Geany|Evince|Soffice|libreoffice*|mpv|Ghb|Xfburn|Gimp*|Inkscape|Vlc|Lxappearance|Audacity] focus
-for_window [class=Xfburn|GParted|System-config-printer.py|Lxtask|Pavucontrol|Exo-helper*|Lxrandr|Arandr] focus
-
-# colour of                  border,  bg,    text, indicator, child_border
-client.focused              #d32e2e #d32e2e #d8dee8 #d32e2e #d32e2e
-client.focused_inactive     #2f343f #2f343f #d8dee8 #2f343f #2f343f
-client.unfocused            #2f343f #2f343f #d8dee8 #2f343f #2f343f
-client.urgent               #2f343f #2f343f #d8dee8 #2f343f #2f343f
-client.placeholder          #2f343f #2f343f #d8dee8 #2f343f #2f343f
-client.background           #2f343f
-
-
-#abrir en workspaces
-
-for_window [class="discord"] move to workspace 5
-for_window [class="Spotify"] move to workspace 3
-
-
-#############################
-### settings for i3-gaps: ###
-#############################
-
-# Set inner/outer gaps
-gaps inner 0
-gaps outer -2
-
-# Additionally, you can issue commands with the following syntax. This is useful to bind keys to changing the gap size.
-# gaps inner|outer current|all set|plus|minus <px>
-# gaps inner all set 10
-# gaps outer all plus 5
-
-# Smart gaps (gaps used if only more than one container on the workspace)
-smart_gaps on
-
-# Smart borders (draw borders around container only if it is not the only container on this workspace)
-# on|no_gaps (on=always activate and no_gaps=only activate if the gap size to the edge of the screen is 0)
-smart_borders on
-
-# Press $mod+Shift+g to enter the gap mode. Choose o or i for modifying outer/inner gaps. Press one of + / - (in-/decrement for current workspace) or 0 (remove gaps for current workspace). If you also press Shift with these keys, the change will be global for all workspaces.
-set $mode_gaps Gaps: (o) outer, (i) inner
-set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
-set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
-bindsym $super+Shift+g mode "$mode_gaps"
-
-mode "$mode_gaps" {
-        bindsym o      mode "$mode_gaps_outer"
-        bindsym i      mode "$mode_gaps_inner"
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-}
-mode "$mode_gaps_inner" {
-        bindsym plus  gaps inner current plus 5
-        bindsym minus gaps inner current minus 5
-        bindsym 0     gaps inner current set 0
-
-        bindsym Shift+plus  gaps inner all plus 5
-        bindsym Shift+minus gaps inner all minus 5
-        bindsym Shift+0     gaps inner all set 0
-
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-}
-mode "$mode_gaps_outer" {
-        bindsym plus  gaps outer current plus 5
-        bindsym minus gaps outer current minus 5
-        bindsym 0     gaps outer current set 0
-
-        bindsym Shift+plus  gaps outer all plus 5
-        bindsym Shift+minus gaps outer all minus 5
-        bindsym Shift+0     gaps outer all set 0
-
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-}
-
-# Set shut down, restart and locking features
-bindsym $super+Escape mode "$mode_system"
-set $mode_system (l)ock, (e)xit, switch_(u)ser, (Shift+s)uspend, (h)ibernate, (r)eboot, (s)hutdown
-mode "$mode_system" {
-    bindsym l exec --no-startup-id i3exit lock, mode "default"
-    bindsym Shift+s exec --no-startup-id i3exit suspend, mode "default"
-    bindsym u exec --no-startup-id i3exit switch_user, mode "default"
-    bindsym e exec --no-startup-id i3exit logout, mode "default"
-    bindsym h exec --no-startup-id i3exit hibernate, mode "default"
-    bindsym r exec --no-startup-id i3exit reboot, mode "default"
-    bindsym s exec --no-startup-id i3exit shutdown, mode "default"
-
-    # exit system mode: "Enter" or "Escape"
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
+;==========================================================
+;
+;
+;   ██████╗  ██████╗ ██╗  ██╗   ██╗██████╗  █████╗ ██████╗
+;   ██╔══██╗██╔═══██╗██║  ╚██╗ ██╔╝██╔══██╗██╔══██╗██╔══██╗
+;   ██████╔╝██║   ██║██║   ╚████╔╝ ██████╔╝███████║██████╔╝
+;   ██╔═══╝ ██║   ██║██║    ╚██╔╝  ██╔══██╗██╔══██║██╔══██╗
+;   ██║     ╚██████╔╝███████╗██║   ██████╔╝██║  ██║██║  ██║
+;   ╚═╝      ╚═════╝ ╚══════╝╚═╝   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
+;
+;
+;   To learn more about how to configure Polybar
+;   go to https://github.com/jaagr/polybar
+;
+;   The README contains alot of information
+;
+;==========================================================
+
+[settings]
+screenchange-reload = true
+;compositing-background = xor
+;compositing-background = screen
+;compositing-foreground = source
+;compositing-border = over
+
+[colors]
+#background = ${xrdb:color0:#222}
+background = ${xrdb:background:#222}
+background-alt = ${xrdb:color8:#444}
+;foreground = ${xrdb:color7:#222}
+foreground = ${xrdb:foreground:#fdfdfd}
+foreground-alt = ${xrdb:color7:#444}
+primary = ${xrdb:color4:#d32e2e}
+secondary = ${xrdb:color7:#7366F8}
+alert = ${xrdb:color1:#D45462}
+transparent = ${xrdb:color1:#000000}
+
+
+
+[bar/top]
+monitor = ${env:MONITOR:}
+width = 100%
+height = 23
+offset-x = 0%
+offset-y = 0
+radius = 0
+fixed-center = true
+bottom = false
+separator = "  |  " 
+separator-foreground = ${colors.primary}
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 3
+line-color = #f00
+
+border-size = 7
+border-color = ${colors.background}
+
+padding-left = 2
+padding-right = 2
+
+module-margin-left = 0
+module-margin-right = 
+
+font-0 = Nerd Hack Font:size=12;0
+font-1 = Source Code Pro:size=12;0
+font-2 = JetBrainsMono Nerd size=12;0
+font-3 = FontAwesome:style=Regular:size=14;4
+
+modules-left = xworkspaces xwindow
+modules-center = date
+modules-right = player-mpris-tail pulseaudio battery 
+
+; wm-restack = bspwm
+wm-restack = i3
+
+; override-redirect = true
+
+;scroll-up = bspwm-desknext
+;scroll-down = bspwm-deskprev
+
+scroll-up = i3wm-wsnext
+scroll-down = i3wm-wsprev
+
+cursor-click = pointer
+cursor-scroll = ns-resize
+
+
+[module/xworkspaces]
+type = internal/xworkspaces
+
+enable-scroll = true
+reverse-scroll = true
+
+label-active = %name%
+label-active-background = ${colors.background}
+label-active-underline= ${colors.primary}
+label-active-padding = 1
+
+label-occupied = %name%
+label-occupied-padding = 1
+label-occupied-background = ${colors.background}
+
+label-empty = %name%
+label-empty-background = ${colors.background}
+label-empty-foreground = ${colors.disabled}
+label-empty-padding = 1
+
+[module/xwindow]
+type = internal/xwindow
+label = %title:0:50:...%
+
+
+
+[module/player-mpris-tail]
+type = custom/script
+exec = ~/.config/polybar/scripts/player-mpris-tail.py -f '{title}'
+tail = true
+click-left = ~/.config/polybar/scripts/player-mpris-tail.py previous &
+click-right = ~/.config/polybar/scripts/player-mpris-tail.py next &
+click-middle = ~/.config/polybar/scripts/player-mpris-tail.py play-pause &
+
+[module/date]
+type = internal/date
+interval = 1
+
+date = "%d/%m"
+date-alt = "%d %B %Y"
+time = %R
+time-alt = %T
+format-prefix-foreground = ${colors.foreground-alt}
+
+label =%time%  %date% 
+
+[module/pulseaudio]
+type = internal/pulseaudio
+
+; Sink to be used, if it exists (find using `pacmd list-sinks`, name field)
+; If not, uses default sink
+; sink = alsa_output.pci-0000_12_00.3.analog-stereo
+
+; Use PA_VOLUME_UI_MAX (~153%) if true, or PA_VOLUME_NORM (100%) if false
+; Default: true
+use-ui-max = true
+
+; Interval for volume increase/decrease (in percent points)
+; Default: 5
+interval = 5
+
+; Reverses the increment/decrement on scroll event. Set this to true if you are
+; using natural scrolling option on your touchpad.
+; New in version 3.7.0
+; Default: false
+reverse-scroll = true
+
+; Available tags:
+;   <label-volume> (default)
+;   <ramp-volume>
+;   <bar-volume>
+format-volume =<ramp-volume><label-volume>     
+
+; Available tags:
+;   <label-muted> (default)
+;   <ramp-volume>
+;   <bar-volume>
+;format-muted = <label-muted>
+
+; Available tokens:
+;   %percentage% (default)
+;   %decibels%
+;label-volume = %percentage%%
+
+; Available tokens:
+;   %percentage% (default)
+;   %decibels%
+label-muted = muted
+label-muted-foreground = #666
+
+; Only applies if <ramp-volume> is used
+ramp-volume-0 = 🔈
+ramp-volume-1 = 🔉
+ramp-volume-2 = 🔊
+
+; Right and Middle click
+click-right = pavucontrol
+;click-middle =  
+
+
+[module/battery]
+type = internal/battery
+
+; This is useful in case the battery never reports 100% charge
+; Default: 100
+full-at = 99
+
+; format-low once this charge percentage is reached
+; Default: 10
+; New in version 3.6.0
+low-at = 20
+
+; Use the following command to list batteries and adapters:
+; $ ls -1 /sys/class/power_supply/
+battery = BAT1
+adapter = ACAD
+
+; If an inotify event haven't been reported in this many
+; seconds, manually poll for new values.
+;
+; Needed as a fallback for systems that don't report events
+; on sysfs/procfs.
+;
+; Disable polling by setting the interval to 0.
+;
+; Default: 5
+poll-interval = 5
+; see "man date" for details on how to format the time string
+; NOTE: if you want to use syntax tags here you need to use %%{...}
+; Default: %H:%M:%S
+time-format = %H:%M
+
+; Available tags:
+;   <label-charging> (default)
+;   <bar-capacity>
+;   <ramp-capacity>
+;   <animation-charging>
+format-charging = <animation-charging> <label-charging>
+
+; Available tags:
+;   <label-discharging> (default)
+;   <bar-capacity>
+;   <ramp-capacity>
+;   <animation-discharging>
+format-discharging = <ramp-capacity> <label-discharging>
+
+; Available tags:
+;   <label-full> (default)
+;   <bar-capacity>
+;   <ramp-capacity>
+;format-full = <ramp-capacity> <label-full>
+
+; Format used when battery level drops to low-at
+; If not defined, format-discharging is used instead.
+; Available tags:
+;   <label-low>
+;   <animation-low>
+;   <bar-capacity>
+;   <ramp-capacity>
+; New in version 3.6.0
+;format-low = <label-low> <animation-low>
+
+; Available tokens:
+;   %percentage% (default) - is set to 100 if full-at is reached
+;   %percentage_raw%
+;   %time%
+;   %consumption% (shows current charge rate in watts)
+label-charging =Cargando %percentage%% 
+
+; Available tokens:
+;   %percentage% (default) - is set to 100 if full-at is reached
+;   %percentage_raw%
+;   %time%
+;   %consumption% (shows current discharge rate in watts)
+label-discharging = %percentage%%
+
+; Available tokens:
+;   %percentage% (default) - is set to 100 if full-at is reached
+;   %percentage_raw%
+label-full = Cargado %percentage%%
+
+; Available tokens:
+;   %percentage% (default) - is set to 100 if full-at is reached
+;   %percentage_raw%
+;   %time%
+;   %consumption% (shows current discharge rate in watts)
+; New in version 3.6.0
+label-low = Bateria baja %percentage%%
+
+; Only applies if <ramp-capacity> is used
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+
+; Only applies if <bar-capacity> is used
+bar-capacity-width = 10
+
+; Only applies if <animation-charging> is used
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+; Framerate in milliseconds
+animation-charging-framerate = 750
+
+; Only applies if <animation-discharging> is used
+animation-discharging-0 = 
+animation-discharging-1 = 
+animation-discharging-2 = 
+animation-discharging-3 = 
+animation-discharging-4 = 
+; Framerate in milliseconds
+animation-discharging-framerate = 500
+
+; Only applies if <animation-low> is used
+; New in version 3.6.0
+animation-low-0 = !
+animation-low-1 = 
+animation-low-framerate = 200
+
+
+
+
+;NO ESTAN PUESTOS
+[module/network]
+type = costum/script
+exec = nmcli -t -f NAME, TYPE, DEVICE, STAT con show --active
+tail = true
+label-active = "%output%"
+label-inactive = "Sin wifi"
+
+[module/powermenu]
+type = custom/menu
+
+expand-right = false
+label-open = "X"
+label-close = "X"
+label-separator = "  "
+
+label-close-foreground = ${colors.accent}
+label-separator-foreground = ${colors.disabled}
+format-background = ${colors.background}
+
+menu-0-0 = Apagar
+menu-0-1 = Suspender
+menu-0-2 = Reiniciar
+
+menu-0-0-exec = systemctl poweroff
+menu-0-1-exec = systemctl suspend
+menu-0-2-exec = systemctl reboot
+
+menu-0-0-underline = ${colors.accent}
+menu-0-1-underline = ${colors.accent}
+menu-0-2-underline = ${colors.accent}
 
