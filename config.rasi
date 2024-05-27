@@ -1,0 +1,21 @@
+/* Rofi config file */
+configuration {
+    font: "Font Awesome 16";
+    show-icons: true;
+    display-window: "Ventana";
+    display-drun: "Buscar";
+}
+
+//@theme "/usr/share/rofi/themes/Arc-Dark.rasi"
+
+listview {
+    lines: 12;
+}
+
+element-icon {
+    size:2.5ch;
+}
+
+
+
+@theme "/usr/share/rofi/themes/squared.rasi"

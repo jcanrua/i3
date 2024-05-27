@@ -1,19 +1,13 @@
 #!/usr/bin/env bash
 
 # Terminate already running bar instances
-killall -q polybar
+# If all your bars have ipc enabled, you can use 
+polybar-msg cmd quit
+# Otherwise you can use the nuclear option:
+# killall -q polybar
 
-# Wait until the processes have been shut down
-while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
-
-if type "xrandr"; then
-  # Launch mybar for each monitor
-  for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
-    MONITOR=$m polybar --reload top &
-  done
-else
-  # Launch mybar
-  polybar --reload top &
-fi
+# Launch bar1 and bar2
+echo "---" | tee -a /tmp/top.log 
+polybar top 2>&1 | tee -a /tmp/polybar1.log & disown
 
 echo "Bars launched..."
